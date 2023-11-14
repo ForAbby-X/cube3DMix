@@ -6,7 +6,7 @@
 /*   By: alde-fre <alde-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 10:36:00 by alde-fre          #+#    #+#             */
-/*   Updated: 2023/11/13 18:47:40 by alde-fre         ###   ########.fr       */
+/*   Updated: 2023/11/14 07:10:41 by alde-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ static inline int	__main_menu(t_engine *eng, t_data *game, double dt)
 
 	stime += dt;
 	menu_update(eng, &game->menu);
+	if (game->state == 0)
+		ft_hide_cursor(game->eng);
 	game->cam.pos = (t_v3f){-1.10f, 1.5f, 0.f};
 	game->cam.rot = (t_v2f){0.f, -M_PI * 0.33};
 	camera_update(&game->cam);
@@ -91,8 +93,6 @@ static inline int	__loop(t_engine *eng, t_data *game, double dt)
 			- (t_v3f){0.01f, .465f, -0.05f}}, &game->models[13]);
 	entities_display(game);
 	particles_update(game, dt);
-	if (ft_mouse(eng, 1).pressed)
-		e_enemy_creep_add(game, game->cam.pos, (t_v2f){0.f});
 	__loop_2(eng, game, dt);
 	return (1);
 }
