@@ -6,7 +6,7 @@
 /*   By: alde-fre <alde-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:30:00 by alde-fre          #+#    #+#             */
-/*   Updated: 2023/11/14 10:47:18 by alde-fre         ###   ########.fr       */
+/*   Updated: 2023/11/14 17:57:26 by alde-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ static inline void	__player_rotate(
 			* (game->sensitivity / 100.f);
 		mlx_mouse_move(game->eng->mlx, game->eng->win, 500, 260);
 	}
-	if (self->rot[x] < -M_PI)
-		self->rot[x] += M_PI * 2;
-	else if (self->rot[x] > M_PI)
-		self->rot[x] -= M_PI * 2;
+	if (self->rot[y] < -M_PI_2)
+		self->rot[y] = -M_PI_2;
+	else if (self->rot[y] > M_PI_2)
+		self->rot[y] = M_PI_2;
 }
 
 void	player_control(
