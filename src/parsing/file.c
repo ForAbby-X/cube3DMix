@@ -6,7 +6,7 @@
 /*   By: alde-fre <alde-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 22:20:24 by vmuller           #+#    #+#             */
-/*   Updated: 2023/11/14 07:45:57 by alde-fre         ###   ########.fr       */
+/*   Updated: 2023/11/14 07:53:17 by alde-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_map	pars_file(
 	t_map	map;
 	int		fd;
 
-	if (ft_strlen(path) <= 5 || !ft_strrchr(path, '.')
+	if (ft_strlen(path) <= 4 || !ft_strrchr(path, '.')
 		|| ft_strncmp(ft_strrchr(path, '.'), ".cub", 5))
 		return (ft_putstr_fd("Error\nparsing error : wrong extension\n", 2),
 			(t_map){0});
