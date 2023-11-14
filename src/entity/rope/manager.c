@@ -6,7 +6,7 @@
 /*   By: alde-fre <alde-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 08:20:51 by vmuller           #+#    #+#             */
-/*   Updated: 2023/11/13 18:36:39 by alde-fre         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:10:08 by alde-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,43 @@ static void	_rope_display(t_entity *const self, t_data *const game)
 	t_transform	trans;
 
 	trans.rotation = self->rot;
-	trans.resize = (t_v3f){.125f, .125f, .125f};
-	trans.translation = self->aabb.pos + (t_v3f){0.15f, 0.0f, 0.15f};
-	mesh_put(game->eng, &game->cam, trans, &game->models[11]);
+	trans.resize = (t_v3f){1., 1.f, 1.f};
+	trans.translation = self->aabb.pos
+		+ (t_v3f){self->aabb.dim[x], 0.f, self->aabb.dim[z]} * 0.5f;
+	mesh_put(game->eng, &game->cam, trans, &game->models[10]);
 }
 
-static void	_rope_destroy(t_entity *const self, t_data *const game)
+static inline void	__fix_rope(
+						t_data *const game,
+						t_v3f const pos,
+						t_entity *const rope)
 {
-	(void)self;
-	(void)game;
+	t_v3i const	cpos = v3ftoi(pos);
+
+	rope->aabb.dim = (t_v3f){0.3f, 0.7f, 0.3f};
+	if (map_get(&game->map, cpos + (t_v3i){1, 0, 0}) == cell_wall)
+	{
+		rope->aabb.pos = v3itof(cpos) + (t_v3f){.85f, 0.f, 0.35f};
+		rope->rot = (t_v2f){0, 0.f};
+	}
+	else if (map_get(&game->map, cpos + (t_v3i){0, 0, 1}) == cell_wall)
+	{
+		rope->aabb.pos = v3itof(cpos) + (t_v3f){0.35f, 0.f, 0.85f};
+		rope->rot = (t_v2f){M_PI_2, 0.f};
+	}
+	else if (map_get(&game->map, cpos + (t_v3i){-1, 0, 0}) == cell_wall)
+	{
+		rope->aabb.pos = v3itof(cpos) + (t_v3f){-.15f, 0.f, 0.35f};
+		rope->rot = (t_v2f){M_PI, 0.f};
+	}
+	else
+	{
+		rope->aabb.pos = v3itof(cpos) + (t_v3f){0.35f, 0.f, -0.15f};
+		rope->rot = (t_v2f){-M_PI_2, 0.f};
+	}
 }
 
-t_entity	*e_rope_add(t_data *const game, t_v3f const pos, t_v2f rot)
+t_entity	*e_rope_add(t_data *const game, t_v3f const pos)
 {
 	t_entity	*ent;
 
@@ -69,12 +94,8 @@ t_entity	*e_rope_add(t_data *const game, t_v3f const pos, t_v2f rot)
 		return (NULL);
 	ent->update = &_rope_update;
 	ent->display = &_rope_display;
-	ent->destroy = &_rope_destroy;
-	ent->dir = (t_v3f){0};
-	ent->rot = (t_v2f){rot[x], rot[y]};
-	ent->mesh = &game->models[12];
-	ent->aabb.dim = (t_v3f){0.3f, 0.09f, 0.3f};
-	ent->aabb.pos = pos - (t_v3f){0.15f, 0.0f, 0.15f};
+	ent->mesh = &game->models[10];
+	__fix_rope(game, pos, ent);
 	ent->aabb.type = AABB_IMMOVABLE;
 	ent->type = ENTITY_ROPE;
 	return (ent);

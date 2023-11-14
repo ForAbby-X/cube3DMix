@@ -6,7 +6,7 @@
 /*   By: alde-fre <alde-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 22:20:24 by vmuller           #+#    #+#             */
-/*   Updated: 2023/11/14 07:53:17 by alde-fre         ###   ########.fr       */
+/*   Updated: 2023/11/14 10:44:32 by alde-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ int	pars_error(t_pars *const pars, char *const str)
 	return (1);
 }
 
-t_map	pars_file(
-	t_engine *const eng,
-	char *const path)
+t_map	pars_file(t_engine *const eng, char *const path)
 {
 	t_pars	pars;
 	t_map	map;
@@ -50,7 +48,7 @@ t_map	pars_file(
 			(t_map){0});
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		return ((t_map){0});
+		return (close(fd), (t_map){0});
 	pars = (t_pars){0};
 	pars.data = vector_create(sizeof(char *));
 	if (pars.data.data == NULL)
@@ -64,5 +62,5 @@ t_map	pars_file(
 		|| (!is_map_closed(&map) && __pars_clear(&pars)))
 		return (close(fd), vector_destroy(&pars.data), (t_map){0});
 	__pars_clear(&pars);
-	return (vector_destroy(&pars.data), close(fd), map);
+	return (close(fd), vector_destroy(&pars.data), map);
 }

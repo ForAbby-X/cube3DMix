@@ -6,7 +6,7 @@
 /*   By: alde-fre <alde-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:30:00 by alde-fre          #+#    #+#             */
-/*   Updated: 2023/11/14 07:52:45 by alde-fre         ###   ########.fr       */
+/*   Updated: 2023/11/14 10:47:18 by alde-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,11 @@ void	player_control(
 			t_data *const game,
 			double const dt)
 {
-	__player_move(self, game->eng, game, dt);
-	__player_rotate(self, game->eng, game, dt);
+	if (game->state != 2)
+	{
+		__player_move(self, game->eng, game, dt);
+		__player_rotate(self, game->eng, game, dt);
+	}
 	if (ft_key(game->eng, XK_Tab).pressed)
 	{
 		if (game->show_settings)
