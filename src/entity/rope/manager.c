@@ -6,26 +6,12 @@
 /*   By: alde-fre <alde-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 08:20:51 by vmuller           #+#    #+#             */
-/*   Updated: 2023/11/14 15:10:08 by alde-fre         ###   ########.fr       */
+/*   Updated: 2023/11/14 18:12:31 by alde-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "entity/all.h"
 #include "title.h"
-
-static void	hardcore_mode(t_data *const game, t_v3f const pos, float const dt)
-{
-	int	i;
-
-	i = -1;
-	game->cam.fog_color = (t_color){0xFF8A0F0F};
-	while (++i < 100)
-	{
-		game->cam.fog_distance = fmaxf(game->cam.fog_distance - dt, 6.0f);
-		e_enemy_fish_add(game, pos + \
-	(t_v3f){ft_rand(-6.0f, 6.0f), 0.0f, ft_rand(-6.0f, 6.0f)}, (t_v2f){0.f});
-	}
-}
 
 static void	_rope_update(
 			t_entity *const self,
@@ -39,8 +25,8 @@ static void	_rope_update(
 	{
 		self->dead = 1;
 		game->state = 1;
+		game->cam.fog_color = (t_color){0xFF8A0F0F};
 		title_put(&game->title, g_titles[1], 2.5f);
-		hardcore_mode(game, self->aabb.pos, dt);
 	}
 }
 

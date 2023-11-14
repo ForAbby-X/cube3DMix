@@ -6,7 +6,7 @@
 /*   By: alde-fre <alde-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 10:36:00 by alde-fre          #+#    #+#             */
-/*   Updated: 2023/11/14 17:48:25 by alde-fre         ###   ########.fr       */
+/*   Updated: 2023/11/14 18:27:42 by alde-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ static inline void	__death_loop(t_data *game)
 		game->cam.pos = ray.end - v3fnorm(dir, 0.01f);
 	game->cam.rot = v3flook(game->cam.pos, center);
 	player->rot[x] = player->time_alive / 6.f;
+	if (player->health > 0.0f)
+		player->health = 9999.f;
 }
 
 static inline int	__loop(t_engine *eng, t_data *game, double dt)
@@ -120,7 +122,7 @@ static inline int	__loop(t_engine *eng, t_data *game, double dt)
 	entities_display(game);
 	particles_update(game, dt);
 	__loop_2(eng, game, dt);
-	return (loop_la_vrai(eng, game));
+	return (loop_la_vrai(eng, game, dt));
 }
 
 int	main(int argc, char **argv)

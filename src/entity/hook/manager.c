@@ -6,7 +6,7 @@
 /*   By: alde-fre <alde-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 08:45:45 by vmuller           #+#    #+#             */
-/*   Updated: 2023/11/14 17:29:25 by alde-fre         ###   ########.fr       */
+/*   Updated: 2023/11/14 18:15:44 by alde-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static void	_hook_update(
 	{
 		player->aabb.type = AABB_IMMOVABLE;
 		game->cam.fog_distance = 4.f;
-		game->cam.fog_color = (t_color){0x0};
 		game->death_pos = self->aabb.pos + self->aabb.dim * .5f;
 		game->state = 2;
 		title_put(&game->title, g_titles[2], 10.0f);

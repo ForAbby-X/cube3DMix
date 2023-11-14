@@ -6,7 +6,7 @@
 /*   By: alde-fre <alde-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 05:54:24 by alde-fre          #+#    #+#             */
-/*   Updated: 2023/11/14 17:53:16 by alde-fre         ###   ########.fr       */
+/*   Updated: 2023/11/14 18:00:52 by alde-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,6 @@ int	game_init(t_engine *const eng, t_data *const game, char **argv)
 	game->holding = (t_holding){{0.0f, 0.0f, 0.0f}, 0.0f, 0.0f, 0.0f};
 	game->show_settings = 0;
 	game->sensitivity = 0.2f;
+	game->hard_time = 0.f;
 	return (__game_init_2(game) == 1);
 }
