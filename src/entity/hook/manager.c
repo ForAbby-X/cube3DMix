@@ -6,7 +6,7 @@
 /*   By: alde-fre <alde-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 08:45:45 by vmuller           #+#    #+#             */
-/*   Updated: 2023/11/12 06:48:57 by alde-fre         ###   ########.fr       */
+/*   Updated: 2023/11/13 18:39:06 by alde-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ static void	_hook_update(
 		ray_box_intersection(game->cam.pos, v3frot((t_v3f){1.0f}, \
 		game->cam.rot), self->aabb, &(float){0.0f}) && \
 		game->state == 1)
-	{
 		game->state = 2;
-		game->selected_model = 9;
-	}
 }
 
 static void	_hook_display(t_entity *const self, t_data *const game)
@@ -37,8 +34,6 @@ static void	_hook_display(t_entity *const self, t_data *const game)
 	trans.translation = self->aabb.pos + (t_v3f){0.3f, 0.62f, 0.3f};
 	mesh_put(game->eng, &game->cam, trans, &game->models[12]);
 }
-
-// mesh_put(eng, &game->cam, (t_transform){{M_PI_2, 0.0f}, {.125f, .125f, .125f}, game->map.spawn + (t_v3f){.0f, 2.1f, 0.f}}, &game->models[13]);
 
 static void	_hook_destroy(t_entity *const self, t_data *const game)
 {

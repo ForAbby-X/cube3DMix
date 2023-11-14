@@ -6,29 +6,13 @@
 /*   By: alde-fre <alde-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 20:47:41 by alde-fre          #+#    #+#             */
-/*   Updated: 2023/11/13 01:05:15 by alde-fre         ###   ########.fr       */
+/*   Updated: 2023/11/13 08:32:05 by alde-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "aabb.h"
 #include "cast_ray.h"
 #include "entity/entity.h"
-
-int	is_aabb_in_aabb(t_aabb const box1, t_aabb const box2)
-{
-	t_v3f const	min1 = box1.pos;
-	t_v3f const	max1 = box1.pos + box1.dim;
-	t_v3f const	min2 = box2.pos;
-	t_v3f const	max2 = box2.pos + box2.dim;
-
-	if (min1[x] >= max2[x] || min2[x] >= max1[x])
-		return (0);
-	if (min1[y] >= max2[y] || min2[y] >= max1[y])
-		return (0);
-	if (min1[z] >= max2[z] || min2[z] >= max1[z])
-		return (0);
-	return (1);
-}
 
 static inline t_v3f	__vec_normal(
 						t_v3f const pos,
@@ -50,35 +34,6 @@ static inline t_v3f	__vec_normal(
 	return (norm);
 }
 
-void	collision_ent_inside(
-			t_aabb const *const box1,
-			t_v3f *const vel1,
-			t_aabb const *const box2,
-			t_v3f *const vel2)
-{
-	t_v3f const		center1 = box1->pos + box1->dim / 2.0f;
-	t_v3f const		center2 = box2->pos + box2->dim / 2.0f;
-	t_v3f			diff;
-	t_v3f			off;
-//TODO: fix this
-	diff = center1 - center2;
-	// diff[x] = fabsf(diff[x]);
-	// diff[y] = fabsf(diff[y]);
-	// diff[z] = fabsf(diff[z]);
-	off = diff - (box1->dim + box2->dim) / 2.0f;
-	off[y] = 0.0f;
-	if (box1->type == AABB_IMMOVABLE && box2->type == AABB_MOVABLE)
-		*vel2 += off;
-	else if (box1->type == AABB_MOVABLE && box2->type == AABB_IMMOVABLE)
-		*vel1 -= off;
-	else if (box1->type == AABB_MOVABLE && box2->type == AABB_MOVABLE)
-	{
-		off /= 2.f;
-		*vel1 -= off;
-		*vel2 += off;
-	}
-}
-
 int	aabb_solve(
 		t_aabb const *const box1,
 		t_v3f *const vel1,
@@ -91,7 +46,6 @@ int	aabb_solve(
 	float			t;
 	t_v3f			off;
 
-	// printf("collision_ent_outside\n");
 	if ((*vel1)[x] == 0.f && (*vel1)[y] == 0.f && (*vel1)[z] == 0.f)
 		return (0);
 	if (ray_box_intersection(center, *vel1, box, &t) == 0)
@@ -167,9 +121,6 @@ static inline void	__ent_loop(
 				|| (ent->type == ENTITY_PLAYER
 					&& self->type == ENTITY_FIREBALL)))
 		{
-			if (is_aabb_in_aabb(self->aabb, ent->aabb))
-				collision_ent_inside(&self->aabb, &self->vel, &ent->aabb, &ent->vel);
-			else
 			if (aabb_solve(&self->aabb, &self->vel, &ent->aabb, &ent->vel)
 				&& self->collided == ENTITY_NONE)
 			{
@@ -204,7 +155,7 @@ void	collision_ent(
 	{
 		if (ent->type != ENTITY_ENNEMY_FISH
 			&& __block_collision(&game->map, &ent->aabb, &ent->vel)
-				&& ent->collided == ENTITY_NONE)
+			&& ent->collided == ENTITY_NONE)
 				ent->collided = ENTITY_GENERIC;
 		ent->aabb.pos += ent->vel;
 		ent->vel = (t_v3f){0};

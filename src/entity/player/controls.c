@@ -6,7 +6,7 @@
 /*   By: alde-fre <alde-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 14:30:00 by alde-fre          #+#    #+#             */
-/*   Updated: 2023/11/12 05:33:30 by alde-fre         ###   ########.fr       */
+/*   Updated: 2023/11/13 12:55:33 by alde-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,20 @@ void	player_control(
 	__player_move(self, game->eng, game, dt);
 	if (!game->show_settings)
 	{
-		game->cam.rot[x] += ((float)game->eng->mouse_x - 500)
+		self->rot[x] += ((float)game->eng->mouse_x - 500)
 			* (game->sensitivity / 100.f);
-		game->cam.rot[y] -= ((float)game->eng->mouse_y - 260)
+		self->rot[y] -= ((float)game->eng->mouse_y - 260)
 			* (game->sensitivity / 100.f);
 		mlx_mouse_move(game->eng->mlx, game->eng->win, 500, 260);
 	}
-	if (game->cam.rot[x] < -M_PI)
-		game->cam.rot[x] += M_PI * 2;
-	else if (game->cam.rot[x] > M_PI)
-		game->cam.rot[x] -= M_PI * 2;
-	if (game->cam.rot[y] < -M_PI_2)
-		game->cam.rot[y] = -M_PI_2;
-	else if (game->cam.rot[y] > M_PI_2)
-		game->cam.rot[y] = M_PI_2;
+	if (self->rot[x] < -M_PI)
+		self->rot[x] += M_PI * 2;
+	else if (self->rot[x] > M_PI)
+		self->rot[x] -= M_PI * 2;
+	if (self->rot[y] < -M_PI_2)
+		self->rot[y] = -M_PI_2;
+	else if (self->rot[y] > M_PI_2)
+		self->rot[y] = M_PI_2;
 	if (ft_key(game->eng, XK_Tab).pressed)
 	{
 		if (game->show_settings)

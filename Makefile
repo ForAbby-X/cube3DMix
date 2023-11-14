@@ -47,6 +47,7 @@ SRC		=	main.c \
 			map/agrement/elevate.c \
 			map/generation/all.c \
 			map/generation/rooms.c \
+			map/generation/rope.c \
 			 \
 			render/raycaster.c \
 			render/reflection.c \
@@ -97,6 +98,8 @@ SRC		=	main.c \
 			entity/enemy/enemy_attack.c \
 			entity/enemy/manager_scp.c \
 			entity/enemy/manager_fish.c \
+			entity/enemy/manager_creep.c \
+			entity/enemy/manager_nest.c \
 			 \
 			particle/manager.c \
 			particle/generic.c \

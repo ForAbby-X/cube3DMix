@@ -1,0 +1,7 @@
+{
+	"files.associations": {
+		"gameplay_utils.h": "c",
+		"all.h": "c",
+		"particle.h": "c"
+	}
+}

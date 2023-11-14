@@ -6,7 +6,7 @@
 /*   By: alde-fre <alde-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 07:50:47 by alde-fre          #+#    #+#             */
-/*   Updated: 2023/11/12 06:52:37 by alde-fre         ###   ########.fr       */
+/*   Updated: 2023/11/13 14:02:19 by alde-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ enum e_entity
 	ENTITY_ENNEMY_FISH,
 	ENTITY_ROPE,
 	ENTITY_HOOK,
+	ENTITY_ENNEMY_CREEP,
+	ENTITY_ENNEMY_NEST,
 };
 
 void	entities_update(t_data *const game, float const dt);
@@ -59,7 +61,6 @@ struct s_entity
 	t_func_dstr	destroy;
 	void		*data;
 	t_v3f		dir;
-	t_v3f		imp;
 	t_v3f		vel;
 	t_v2f		rot;
 	t_aabb		aabb;

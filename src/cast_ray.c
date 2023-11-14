@@ -6,7 +6,7 @@
 /*   By: alde-fre <alde-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:17:19 by vmuller           #+#    #+#             */
-/*   Updated: 2023/11/12 07:16:25 by alde-fre         ###   ########.fr       */
+/*   Updated: 2023/11/13 08:23:12 by alde-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	ray_box_intersection(
 		tmm[1] = fmin(tmm[1], fmax(fmax(tg[0], tg[1]), tmm[0]));
 		++d;
 	}
-	*t = tmm[tmm[0] < 0.f];
-	return (tmm[0] < tmm[1] && tmm[1] >= 0.f && tmm[0] < 1.f);
+	*t = tmm[0];
+	return (tmm[0] < tmm[1] && tmm[1] >= 0.f && tmm[0] >= 0.f && tmm[0] < 1.f);
 }
 
 static inline void	__setup_ray_step_delta_dist(

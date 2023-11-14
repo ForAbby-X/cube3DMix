@@ -6,7 +6,7 @@
 /*   By: alde-fre <alde-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 08:20:51 by vmuller           #+#    #+#             */
-/*   Updated: 2023/11/12 06:51:21 by alde-fre         ###   ########.fr       */
+/*   Updated: 2023/11/13 18:36:39 by alde-fre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static void	_rope_update(
 		game->cam.rot), self->aabb, &(float){0.0f}))
 	{
 		self->dead = 1;
-		game->selected_model = 11;
 		game->state = 1;
 		title_put(&game->title, g_titles[1], 2.5f);
 		hardcore_mode(game, self->aabb.pos, dt);
